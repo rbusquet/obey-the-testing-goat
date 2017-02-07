@@ -38,25 +38,27 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.test == '1. buy milk' for row in rows),
-            "New to-do item did not appear in table"
-        )
+        self.assertIn('1. buy milk', [row.text for row in rows])
 
         # You can type again. Type "make chocolate".
-        self.fail('Finish test')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('make chocolate')
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
 
         # Hit enter. Page loads. "2. make chocolate" now appears.
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1. buy milk', [row.text for row in rows])
+        self.assertIn('2. make chocolate' , [row.text for row in rows])
 
         # You know what to do. You want to save this.
         # The page should show you a unique URL for your list.
         # Some blablabla is writen about this
+        self.fail('finish test')
 
         # "Let me check if this URL wor... It works!"
 
-        # Buy! I mean, bye
-
-        browser.quit()
 
 
 if __name__ == '__main__':
