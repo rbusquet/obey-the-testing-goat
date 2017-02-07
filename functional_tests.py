@@ -25,7 +25,7 @@ class NewVisitorTest(unittest.TestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
-            'Enter a todo-item'
+            'Enter a to-do item'
         )
 
         # Type "buy milk".
@@ -39,7 +39,8 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.test == '1. buy milk' for row in rows)
+            any(row.test == '1. buy milk' for row in rows),
+            "New to-do item did not appear in table"
         )
 
         # You can type again. Type "make chocolate".
