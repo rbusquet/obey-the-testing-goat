@@ -1,4 +1,4 @@
-from django.test import LiveServerTestCase, TestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
@@ -6,7 +6,7 @@ import time
 import unittest
 
 MAX_WAIT = 10
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -48,18 +48,18 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys('buy milk')
 
         # This should create a todo list, I suppose.
-        # You click enter, the page reloads and now lists "1. buy milk".
+        # You click enter, the page reloads and now lists "1: buy milk".
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1. buy milk')
+        self.wait_for_row_in_list_table('1: buy milk')
 
         # You can type again. Type "make chocolate".
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('make chocolate')
         inputbox.send_keys(Keys.ENTER)
 
-        # Hit enter. Page loads. "2. make chocolate" now appears.
-        self.wait_for_row_in_list_table('1. buy milk')
-        self.wait_for_row_in_list_table('2. make chocolate')
+        # Hit enter. Page loads. "2: make chocolate" now appears.
+        self.wait_for_row_in_list_table('1: buy milk')
+        self.wait_for_row_in_list_table('2: make chocolate')
     
     def test_multiple_users_can_start_lists_at_different_urls(self):
         # Start new todo list
@@ -67,7 +67,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy peacock feathers')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1. Buy peacock feathers')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
         # this should show a new url
         your_list_url = self.browser.current_url
@@ -87,7 +87,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1. Buy milk')
+        self.wait_for_row_in_list_table('1: Buy milk')
 
         person_list_url = self.browser.current_url
         self.assertRegex(person_list_url, '/lists/.+')
