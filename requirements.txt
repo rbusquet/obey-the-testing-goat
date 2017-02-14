@@ -2,6 +2,7 @@ appdirs==1.4.0
 Django==1.10.5
 gunicorn==19.6.0
 packaging==16.8
+psycopg2==2.6.2
 pyparsing==2.1.10
 selenium==3.0.2
 six==1.10.0
