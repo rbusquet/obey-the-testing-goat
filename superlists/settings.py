@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kz-947&w_n9gi9^v#wbp_28u_b$k7*#v@z@=%-fjc8o0*xz5x@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'DEBUG') == 'DEBUG'
 
 ALLOWED_HOSTS = [os.environ.get('HOST', 'local.localhost')]
 
